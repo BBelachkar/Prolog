@@ -1,0 +1,31 @@
+circuit('C1',[E1,E2,E3,E4] ,[S1,S2 ]) :-
+%’C1’ est le nom
+and('A1',[E1,E2 ] ,[S1 ] ),
+% il est mis entre ’ ’pour être
+and('A2',[E3,E4 ] ,[S3 ] ),
+% différencié d’une variable
+or('O',[S1,S3 ],[S4 ] ),
+inv('I',[S4 ],[S2 ]).
+
+and(_,[1 ,1 ],[1 ]).
+and(_,[0 ,1 ],[0 ]).
+and(_,[1 ,0 ],[0 ]).
+and(_,[0 ,0 ],[0 ]).
+or(_,[1 ,1 ],[1 ]).
+or(_,[0 ,1 ],[1 ]).
+or(_,[1 ,0 ],[1 ]).
+or(_,[0 ,0 ],[0 ]).
+inv(_,[1 ],[0 ]).
+inv(_,[0 ],[1 ]).
+
+circuit_bool('C', [E1, E2, E3, E4], [S1, S2]) :-
+    and_bool('A1', [E1, E2], [S1]),
+    and_bool('A2', [E3, E4], [O]),
+    or_bool('O', [S1, O], [S4]),
+    inv_bool('I', [S4], [S2]).
+
+and_bool('A', [X, Y], [Z]) :- Z is X, Y .
+or_bool('O', [X, Y], [Z]) :- Z is X ; Y .
+inv_bool('I', [X], [Y]) :- Y is not(X).
+
+

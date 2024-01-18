@@ -1,0 +1,142 @@
+
+%------------------------
+% enfant(Enfant, Pere)
+%-----------------------
+enfant(marie, jean).
+enfant(pierre, jean).
+enfant(jacques, jean).
+enfant(eric,  pierre).
+enfant(thomas, pierre).
+enfant(vincent,jacques).
+enfant(loic,jacques).
+enfant(michele,jacques).
+enfant(david,thomas).
+enfant(christine,thomas).
+enfant(alex, jean).
+enfant(sophie, jean).
+
+% 2e sÃ©rie
+enfant(alex, sylvie).
+enfant(sophie, sylvie).
+enfant(olivier, jose).
+enfant(valentine, jose).
+enfant(loic, kate).
+enfant(loic, kevine).
+enfant(laure, paul).
+enfant(mark, paul).
+%-------------------------
+% enfant(Enfant, Mere)
+%------------------------
+enfant(mark, marie).
+enfant(laure,marie).
+enfant(serge,laure).
+enfant(charlotte,laure).
+
+
+enfant(alex,jean).
+enfant(sophie,jean).
+enfant(mark,paul).
+enfant(laure, paul).
+enfant(marie,sylvie).
+enfant(pierre,sylvie).
+enfant(jacques,sylvie).
+enfant(vincent,helene).
+enfant(loic,helene).
+enfant(michele,helene).
+enfant(olivier,bernadette).
+enfant(valentine,bernadette).
+enfant(jacques, sylvie).
+enfant(marie, sylvie).
+enfant(pierre, sylvie).
+enfant(loic, helene).
+enfant(michele, helene).
+enfant(vincent, helene).
+enfant(olivier, bernadette).
+enfant(valentine, bernadette).
+enfant(olivier, bernadette).
+enfant(valentine, bernadette).
+
+%--------------------
+% epouse(Femme,Mari)
+%-----------------------
+epouse(sylvie, jean).
+epouse(marie, paul).
+epouse(helene, jacques).
+
+% 2e sÃ©rie
+epouse(bernadette, jose).
+epouse(velentine, loic).
+%--------------------------------------------------------------------------------
+%prédicat homme/1
+
+homme(jean).
+homme(loic).
+homme(jose).
+homme(jacques).
+homme(pierre).
+homme(paul).
+homme(alex).
+homme(olivier).
+homme(vincent).
+homme(eric).
+homme(thomas).
+homme(mark).
+homme(david).
+homme(serge).
+
+%prédicat femme/1
+
+femme(X) :-
+    nonvar(X),
+    not(homme(X)). % \+homme(X)
+
+% Question 1
+epoux(Mari, Femme) :-
+    epouse(Femme, Mari).
+
+% Question 2
+enfant1(E, M) :-
+    epouse(M, P),
+    enfant(E, P).
+
+enfant2(E, P) :-
+    epouse(M, P),
+    enfant(E, M).
+
+% Question 5
+
+pere(Dad, Enf) :- enfant(Enf, Dad), homme(Dad).
+
+mere(Mam, Enf) :- enfant(Enf, mam), femme(Mam).
+
+parent(Par, Enf) :- epoux(Par, X), enfant(Enf, X).
+
+fils(Enf, Par) :- enfant(Enf, Par), homme(Enf).
+
+fille(Enf, Par) :- enfant(Enf, Par), femme(Enf).
+
+
+
+% Question 6
+frere_fils_mari_mere_pere_soeur_mere(Loic, X) :-
+    enfant(filsloic, mereloic),
+    enfant(soeurfilsmereloic, mereloic),
+    enfant(peremereloic, mereloic),
+    enfant(X, peremereloic),
+    epouse(mereperemereloic, peremereloic),
+    enfant(Y, mereperemereloic),
+    enfant(FrereY, peremereloic),
+    homme(FrereY),
+    enfant(FrereY, peremereloic),
+    enfant(Y, mereperemereloic),
+    femme(Soeurfilsmereloic),
+    enfant(Soeurfilsmereloic, merefils),
+    femme(merefils),
+    X \= Loic,
+    X \= Y.
+
+
+
+% Question 7
+grand_pere(P) :- enfant(F, P), enfant(Y, F), enfant(L, N), epoux(P, M), enfant(M, N), enfant(Y, P), Y \== L.
+
